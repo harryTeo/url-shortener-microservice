@@ -45,7 +45,7 @@ router.get('/new/:url*', function(req, res, next) {
 		if (url) { // URL already in database
 		  return res.json({
 		  	original_url: original_url, 
-		  	short_url: req.headers.host + "/" + url.code
+		  	short_url: (req.headers.host.indexOf("https") < 0 && req.headers.host.indexOf("localhost") < 0 ? "https://"+req.headers.host : req.headers.host) + "/" + url.code
 		  });			
 		}
 		else { // New URL
@@ -59,7 +59,7 @@ router.get('/new/:url*', function(req, res, next) {
 					if (err) throw err;
 				  return res.json({
 				  	original_url: original_url, 
-				  	short_url: req.headers.host + "/" + newEntry.code
+				  	short_url: (req.headers.host.indexOf("https") < 0 && req.headers.host.indexOf("localhost") < 0 ? "https://"+req.headers.host : req.headers.host) + "/" + newEntry.code
 				  });							
 				});	
       });					
